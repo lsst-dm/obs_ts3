@@ -97,8 +97,7 @@ class Ts3(cameraGeom.Camera):
         detectorConfigList = self._makeDetectorConfigList()
         for detectorConfig in detectorConfigList:
             ampInfoCatalog = self._makeAmpInfoCatalog()
-            detector = makeDetector(detectorConfig, ampInfoCatalog, focalPlaneToPupil,
-                                    plateScale.asArcseconds())
+            detector = makeDetector(detectorConfig, ampInfoCatalog, focalPlaneToPupil)
             detectorList.append(detector)
         return detectorList
 

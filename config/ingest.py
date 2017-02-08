@@ -1,15 +1,17 @@
-from lsst.obs.monocam.ingest import MonocamParseTask
-config.parse.retarget(MonocamParseTask)
+from lsst.obs.ts3.ingest import Ts3ParseTask
+config.parse.retarget(Ts3ParseTask)
 config.parse.translation = {
     'expTime': 'EXPTIME',
     'object': 'OBJECT',
-    'visit': 'VISIT',
     'imageType': 'IMAGETYP',
     'filter': 'FILTER',
+    'lsstSerial': 'LSST_NUM',
+    'date': 'DATE-OBS'
 }
 config.parse.translators = {
-    'ccd': 'translate_ccd',
-    'date': 'translate_date',
+    # 'ccd': 'translate_ccd',
+    'visit': 'translate_visit',
+    # 'date': 'translate_date',
 }
 config.parse.defaults = {
     'object': "UNKNOWN",
@@ -25,5 +27,6 @@ config.register.columns = {
     'ccd': 'int',
     'object': 'text',
     'imageType': 'text',
+    'lsstSerial': 'text',
 }
 config.register.visit = list(config.register.columns.keys())

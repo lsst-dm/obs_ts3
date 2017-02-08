@@ -8,7 +8,7 @@ from lsst.pipe.tasks.ingestCalibs import CalibsParseTask
 EXTENSIONS = ["fits", "gz", "fz"]  # Filename extensions to strip off
 
 
-class MonocamParseTask(ParseTask):
+class Ts3ParseTask(ParseTask):
     """Parser suitable for lab data"""
 
     def getInfo(self, filename):
@@ -23,9 +23,14 @@ class MonocamParseTask(ParseTask):
     def translate_ccd(self, md):
         return 0  # There's only one
 
+    def translate_visit(self, md):
+        visit_num = md.get("MJD-OBS")
+        visit_num *= 1000
+        return int(visit_num)
+
 ##############################################################################################################
 
-class MonocamCalibsParseTask(CalibsParseTask):
+class Ts3CalibsParseTask(CalibsParseTask):
     """Parser for calibs"""
 
     def _translateFromCalibId(self, field, md):
