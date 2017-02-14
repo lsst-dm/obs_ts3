@@ -26,7 +26,7 @@ import lsst.ip.isr as ip_isr
 import lsst.pipe.base as pipe_base
 
 
-class MonocamIsrTask(ip_isr.IsrTask):
+class Ts3IsrTask(ip_isr.IsrTask):
 
     @pipe_base.timeMethod
     def run(self, ccdExposure, bias=None, dark=None, flat=None, defects=None, fringes=None, bfKernel=None,
@@ -92,7 +92,7 @@ class MonocamIsrTask(ip_isr.IsrTask):
         # Don't trust the variance not to be negative (over-subtraction of dark?)
         # Where it's negative, set it to a robust measure of the variance on the image.
         variance = ccdExposure.getMaskedImage().getVariance().getArray()
-        quartiles = numpy.percentiles(ccdExposure.getMaskedImage().getImage().getArray(), [25.0, 75.0])
+        quartiles = numpy.percentile(ccdExposure.getMaskedImage().getImage().getArray(), [25.0, 75.0])
         stdev = 0.74*(quartiles[1] - quartiles[0])
         variance[:] = numpy.where(variance > 0, variance, stdev**2)
 

@@ -59,12 +59,13 @@ class Ts3Mapper(CameraMapper):
         self.filterIdMap = {'u': 0, 'g': 1, 'r': 2, 'i': 3, 'z': 4, 'y': 5}
 
         # The LSST Filters from L. Jones 04/07/10
-        afwImageUtils.defineFilter('u', 364.59)
-        afwImageUtils.defineFilter('g', 476.31, alias=["SDSSG"])
-        afwImageUtils.defineFilter('r', 619.42, alias=["SDSSR"])
-        afwImageUtils.defineFilter('i', 752.06, alias=["SDSSI"])
-        afwImageUtils.defineFilter('z', 866.85, alias=["SDSSZ"])
-        afwImageUtils.defineFilter('y', 971.68, alias=['y4'])  # official y filter
+        # afwImageUtils.defineFilter('u', 364.59)
+        # afwImageUtils.defineFilter('g', 476.31, alias=["SDSSG"])
+        # afwImageUtils.defineFilter('r', 619.42, alias=["SDSSR"])
+        # afwImageUtils.defineFilter('i', 752.06, alias=["SDSSI"])
+        # afwImageUtils.defineFilter('z', 866.85, alias=["SDSSZ"])
+        # afwImageUtils.defineFilter('y', 971.68, alias=['y4'])  # official y filter
+        afwImageUtils.defineFilter('550CutOn', 550.0)
         afwImageUtils.defineFilter('NONE', 0.0, alias=['no_filter', "OPEN"])
 
     def _extractDetectorName(self, dataId):
@@ -78,11 +79,11 @@ class Ts3Mapper(CameraMapper):
         visit = dataId['visit']
         return int(visit)
 
-    def bypass_ccdExposureId(self, datasetType, pythonType, location, dataId):
-        return self._computeCcdExposureId(dataId)
+    # def bypass_ccdExposureId(self, datasetType, pythonType, location, dataId):
+    #     return self._computeCcdExposureId(dataId)
 
-    def bypass_ccdExposureId_bits(self, datasetType, pythonType, location, dataId):
-        return 41
+    # def bypass_ccdExposureId_bits(self, datasetType, pythonType, location, dataId):
+    #     return 41
 
     def validate(self, dataId):
         visit = dataId.get("visit")
@@ -113,15 +114,15 @@ class Ts3Mapper(CameraMapper):
         on trying to find the defects.  I wanted to be able to return a list of defects constructed
         in code rather than reconstituted from persisted files, so I return a dummy value.
         """
-        return "hack"
+        return "this_is_a_hack"
 
-    def bypass_raw(self, datasetType, pythonType, location, dataId):
-        """Read raw image with hacked metadata"""
-        filename = location.getLocations()[0]
-        md = self.bypass_raw_md(datasetType, pythonType, location, dataId)
-        image = afwImage.DecoratedImageU(filename)
-        image.setMetadata(md)
-        return self.std_raw(image, dataId)
+    # def bypass_raw(self, datasetType, pythonType, location, dataId):
+    #     """Read raw image with hacked metadata"""
+    #     filename = location.getLocations()[0]
+    #     md = self.bypass_raw_md(datasetType, pythonType, location, dataId)
+    #     image = afwImage.DecoratedImageU(filename)
+    #     image.setMetadata(md)
+    #     return self.std_raw(image, dataId)
 
     def bypass_raw_md(self, datasetType, pythonType, location, dataId):
         """Read metadata for raw image, adding fake Wcs"""
@@ -129,8 +130,8 @@ class Ts3Mapper(CameraMapper):
         md = afwImage.readMetadata(filename, 1)  # 1 = PHU
         return md
 
-    bypass_raw_amp = bypass_raw
-    bypass_raw_amp_md = bypass_raw_md
+    # bypass_raw_amp = bypass_raw
+    # bypass_raw_amp_md = bypass_raw_md
 
     def standardizeCalib(self, dataset, item, dataId):
         """Standardize a calibration image read in by the butler
@@ -165,7 +166,7 @@ class Ts3Mapper(CameraMapper):
 
     def std_dark(self, item, dataId):
         exp = self.standardizeCalib("dark", item, dataId)
-        exp.getCalib().setExptime(1.0)
+        # exp.getCalib().setExptime(1.0)
         return exp
 
     def std_flat(self, item, dataId):

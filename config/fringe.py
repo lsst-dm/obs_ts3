@@ -1,3 +1,3 @@
-from lsst.obs.monocam import MonocamIsrTask
-config.isr.retarget(MonocamIsrTask)
+from lsst.obs.ts3 import Ts3IsrTask
+config.isr.retarget(Ts3IsrTask)
 config.dateObs = "date"

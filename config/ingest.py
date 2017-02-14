@@ -3,13 +3,13 @@ config.parse.retarget(Ts3ParseTask)
 config.parse.translation = {
     'expTime': 'EXPTIME',
     'object': 'OBJECT',
-    'imageType': 'IMAGETYP',
+    'imageType': 'IMGTYPE',
     'filter': 'FILTER',
     'lsstSerial': 'LSST_NUM',
     'date': 'DATE-OBS'
 }
 config.parse.translators = {
-    # 'ccd': 'translate_ccd',
+    'ccd': 'translate_ccd',
     'visit': 'translate_visit',
     # 'date': 'translate_date',
 }

@@ -25,7 +25,7 @@ class Ts3ParseTask(ParseTask):
 
     def translate_visit(self, md):
         visit_num = md.get("MJD-OBS")
-        visit_num *= 1000
+        visit_num *= 1000000
         return int(visit_num)
 
 ##############################################################################################################

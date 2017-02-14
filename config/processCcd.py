@@ -1,21 +1,22 @@
-from lsst.obs.monocam import MonocamIsrTask
-config.isr.retarget(MonocamIsrTask)
-config.isr.doDark = True
-config.isr.doBias = True
-config.isr.doFlat = True
+from lsst.obs.ts3 import Ts3IsrTask
+config.isr.retarget(Ts3IsrTask)
+
+config.isr.doDark = False
+config.isr.doBias = False
+config.isr.doFlat = False
 config.isr.doFringe = False
 config.isr.doLinearize = False
 
 config.charImage.repair.doCosmicRay = False
-config.charImage.repair.cosmicray.nCrPixelMax = 1000000
+config.charImage.repair.cosmicray.nCrPixelMax = 100000
 
 
 config.charImage.background.binSize = 128
-config.charImage.detectAndMeasure.detection.background.binSize = 128
-config.calibrate.detectAndMeasure.detection.background.binSize = 128
+# config.charImage.detectAndMeasure.detection.background.binSize = 128
+# config.calibrate.detectAndMeasure.detection.background.binSize = 128
 config.charImage.background.useApprox = False
-config.charImage.detectAndMeasure.detection.background.useApprox = False
-config.calibrate.detectAndMeasure.detection.background.useApprox = False
+# config.charImage.detectAndMeasure.detection.background.useApprox = False
+# config.calibrate.detectAndMeasure.detection.background.useApprox = False
 
 # PSFEx gives better PSFs for HSC
 try:
